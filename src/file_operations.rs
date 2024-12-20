@@ -34,12 +34,9 @@ pub fn create_dotfiles_repo(
     for dotfile in dotfiles {
         let target = Path::new(repo_path).join(dotfile.file_name().unwrap());
 
-        dbg!(&dotfile);
         if dotfile.is_dir() {
-            dbg!("Is dir");
             symlink_dir(dotfile, &target)?;
         } else {
-            dbg!("Is file");
             symlink_file(dotfile, &target)?;
         }
 
