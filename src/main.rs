@@ -10,7 +10,7 @@ use cli::Args;
 use colored::*;
 use config::Config;
 use file_operations::{create_dotfiles_repo, find_dotfiles, print_file_tree};
-use git_operations::init_git_repo;
+use git_operations::{add_pre_commit_hook, init_git_repo};
 use indicatif::{ProgressBar, ProgressStyle};
 use std::fs;
 use std::path::Path;
@@ -62,6 +62,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     spinner.enable_steady_tick(Duration::from_millis(100));
 
     init_git_repo(&repo_path)?;
+    add_pre_commit_hook(&repo_path)?;
     spinner.finish_and_clear();
 
     println!("{}", "Dotfiles repo created successfully!".green().bold());
