@@ -2,23 +2,14 @@ use crate::config::Dotfile;
 use colored::*;
 use std::fs;
 use std::path::{Path, PathBuf};
-use symlink::symlink_file;
+use symlink::{symlink_dir, symlink_file};
 use thiserror::Error;
 
-const DEFAULT_HOME_PATH: &str = "~";
-
-fn create_dotfile_path(path: &str, home_path: Option<&str>) -> String {
-    path.replace(
-        "${HOME}",
-        if let Some(hp) = home_path {
-            hp
-        } else {
-            DEFAULT_HOME_PATH
-        },
-    )
+fn create_dotfile_path(path: &str, home_path: &str) -> String {
+    path.replace("${HOME}", home_path)
 }
 
-pub fn find_dotfiles(dotfiles: &[Dotfile], home_path: Option<&str>) -> Vec<PathBuf> {
+pub fn find_dotfiles(dotfiles: &[Dotfile], home_path: &str) -> Vec<PathBuf> {
     dotfiles
         .iter()
         .filter_map(|dotfile| {
@@ -43,7 +34,15 @@ pub fn create_dotfiles_repo(
     for dotfile in dotfiles {
         let target = Path::new(repo_path).join(dotfile.file_name().unwrap());
 
-        symlink_file(dotfile, &target)?;
+        dbg!(&dotfile);
+        if dotfile.is_dir() {
+            dbg!("Is dir");
+            symlink_dir(dotfile, &target)?;
+        } else {
+            dbg!("Is file");
+            symlink_file(dotfile, &target)?;
+        }
+
         println!(
             "  {} {}",
             "Symlinked:".green(),

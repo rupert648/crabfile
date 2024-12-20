@@ -22,6 +22,11 @@ pub(crate) fn check_for_and_accept_secrets(path: &PathBuf) -> Result<bool, Box<d
         path_string.bright_blue().bold(),
         "for secrets".bright_blue()
     );
+
+    if path.is_dir() {
+        return Ok(true);
+    }
+
     let scan_results = check_file_for_secrets(path)?;
     if scan_results.is_empty() {
         return Ok(true);

@@ -6,8 +6,9 @@ dotfiles:
   - name: ${HOME}/.gitconfig
   - name: ${HOME}/.gitignore_global
   - name: ${HOME}/.tmux.conf
+  - name: ${HOME}/.tmux/
   - name: ${HOME}/.ssh/config
-  - name: ${HOME}/.config/nvim/init.vim
+  - name: ${HOME}/.config/nvim/
   - name: ${HOME}/.hyper.js
   - name: ${HOME}/.npmrc
   - name: ${HOME}/.yarnrc
@@ -19,7 +20,7 @@ dotfiles:
   - name: ${HOME}/.curlrc
   - name: ${HOME}/.wgetrc
   - name: ${HOME}/.gemrc
-  - name: ${HOME}/.config/alacritty/alacritty.yml
+  - name: ${HOME}/.config/alacritty
   - name: ${HOME}/.config/karabiner/karabiner.json
   - name: ${HOME}/.config/iterm2/com.googlecode.iterm2.plist
   - name: ${HOME}/.aws/config
