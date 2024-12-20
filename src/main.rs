@@ -19,6 +19,7 @@ use tui::{get_repo_path, print_title_screen, select_dotfiles};
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
+    dbg!(&args.config);
     let config = fs::read_to_string(args.config)?;
     let config: Config = serde_yaml::from_str(&config)?;
 
@@ -35,10 +36,12 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     );
     spinner.enable_steady_tick(Duration::from_millis(100));
 
-    let found_dotfiles = find_dotfiles(&config.dotfiles, args.home.as_deref());
+    let found_dotfiles = find_dotfiles(&config.dotfiles, &args.home);
+    dbg!(&found_dotfiles);
     spinner.finish_and_clear();
 
     let selected_dotfiles = select_dotfiles(&found_dotfiles)?;
+    dbg!(&selected_dotfiles);
 
     let spinner = ProgressBar::new_spinner();
     spinner.set_message("Creating dotfiles repo...");

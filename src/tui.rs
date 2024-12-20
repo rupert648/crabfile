@@ -41,7 +41,7 @@ pub fn select_dotfiles(dotfiles: &[PathBuf]) -> Result<Vec<PathBuf>, Box<dyn std
 
     let selections = MultiSelect::new()
         .with_prompt(
-            "\nFound the following dotfiles, select which to include:"
+            "\nFound the following dotfiles, select which to include (space to select, enter to continue)"
                 .green()
                 .to_string(),
         )
